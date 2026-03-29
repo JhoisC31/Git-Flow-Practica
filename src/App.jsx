@@ -3,10 +3,26 @@ import { useState } from "react";
 function App() {
   const [users, setUsers] = useState([]);
   const [name, setName] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
 
   const addUser = () => {
-    setUsers([...users, name]);
+    if (!name) return;
+
+    if (editIndex !== null) {
+      const updatedUsers = [...users];
+      updatedUsers[editIndex] = name;
+      setUsers(updatedUsers);
+      setEditIndex(null);
+    } else {
+      setUsers([...users, name]);
+    }
+
     setName("");
+  };
+
+  const editUser = (index) => {
+    setName(users[index]);
+    setEditIndex(index);
   };
 
   return (
@@ -18,7 +34,9 @@ function App() {
         onChange={(e) => setName(e.target.value)}
         placeholder="Nombre"
       />
-      <button onClick={addUser}>Agregar</button>
+      <button onClick={addUser}>
+        {editIndex !== null ? "Actualizar" : "Agregar"}
+      </button>
 
       <h2>Lista de usuarios</h2>
 
@@ -28,7 +46,8 @@ function App() {
         <ul>
           {users.map((u, i) => (
             <li key={i}>
-              {i + 1}. {u}
+              {u}
+              <button onClick={() => editUser(i)}>Editar</button>
             </li>
           ))}
         </ul>
