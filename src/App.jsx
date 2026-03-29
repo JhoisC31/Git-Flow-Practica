@@ -20,11 +20,19 @@ function App() {
       />
       <button onClick={addUser}>Agregar</button>
 
-      <ul>
-        {users.map((u, i) => (
-          <li key={i}>{u}</li>
-        ))}
-      </ul>
+      <h2>Lista de usuarios</h2>
+
+      {users.length === 0 ? (
+        <p>No hay usuarios</p>
+      ) : (
+        <ul>
+          {users.map((u, i) => (
+            <li key={i}>
+              {i + 1}. {u}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
