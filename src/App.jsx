@@ -1,4 +1,7 @@
 import { useState } from "react";
+import UserForm from "./components/UserForm";
+import UserList from "./components/UserList";
+import "./components/style.css";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -31,85 +34,25 @@ function App() {
   };
 
   return (
-    <div style={styles.container}>
-      <h1> Usuarios</h1>
+    <div className="container">
+      <h1>Usuarios</h1>
 
-      <div style={styles.form}>
-        <input
-          style={styles.input}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nombre"
-        />
-        <button style={styles.button} onClick={addUser}>
-          {editIndex !== null ? "Actualizar" : "Agregar"}
-        </button>
-      </div>
+      <UserForm
+        name={name}
+        setName={setName}
+        addUser={addUser}
+        editIndex={editIndex}
+      />
 
       <h2>Lista de usuarios</h2>
 
-      {users.length === 0 ? (
-        <p>No hay usuarios</p>
-      ) : (
-        <ul style={styles.list}>
-          {users.map((u, i) => (
-            <li key={i} style={styles.item}>
-              <span>{u}</span>
-              <div>
-                <button style={styles.editBtn} onClick={() => editUser(i)}>
-                  Editar
-                </button>
-                <button style={styles.deleteBtn} onClick={() => deleteUser(i)}>
-                  Eliminar
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+      <UserList
+        users={users}
+        editUser={editUser}
+        deleteUser={deleteUser}
+      />
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "500px",
-    margin: "50px auto",
-    textAlign: "center",
-    fontFamily: "Arial",
-  },
-  form: {
-    display: "flex",
-    gap: "10px",
-    justifyContent: "center",
-    marginBottom: "20px",
-  },
-  input: {
-    padding: "8px",
-    width: "200px",
-  },
-  button: {
-    padding: "8px 12px",
-    cursor: "pointer",
-  },
-  list: {
-    listStyle: "none",
-    padding: 0,
-  },
-  item: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "10px",
-    padding: "8px",
-    border: "1px solid #ccc",
-  },
-  editBtn: {
-    marginRight: "5px",
-  },
-  deleteBtn: {
-    backgroundColor: "red",
-    color: "white",
-  },
-};
 
 export default App;
