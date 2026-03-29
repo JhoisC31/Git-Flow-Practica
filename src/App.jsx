@@ -25,6 +25,11 @@ function App() {
     setEditIndex(index);
   };
 
+  const deleteUser = (index) => {
+  const filteredUsers = users.filter((_, i) => i !== index);
+  setUsers(filteredUsers);
+  };
+
   return (
     <div>
       <h1>Usuarios</h1>
@@ -48,6 +53,7 @@ function App() {
             <li key={i}>
               {u}
               <button onClick={() => editUser(i)}>Editar</button>
+              <button onClick={() => deleteUser(i)}>Eliminar</button>
             </li>
           ))}
         </ul>
